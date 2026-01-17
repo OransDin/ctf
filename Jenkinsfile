@@ -12,6 +12,8 @@ pipeline {
   environment {
     TF_IN_AUTOMATION = "true"
     TF_DIR = "infra"
+    // Optional safety: prevents AWS SDK from trying IMDS when creds exist
+    AWS_EC2_METADATA_DISABLED = "true"
   }
 
   stages {
@@ -24,7 +26,7 @@ pipeline {
         sh '''
           set -e
           if [ -z "${KEY_NAME}" ]; then
-            echo "ERROR: KEY_NAME is required (AWS EC2 key pair name)."
+            echo "ERROR: KEY_NAME is required (AWS EC2 Key Pair name)."
             exit 1
           fi
         '''
@@ -43,6 +45,14 @@ pipeline {
             sudo apt-get update
             sudo apt-get install -y netcat-openbsd
           fi
+          if ! command -v docker >/dev/null 2>&1; then
+            echo "ERROR: docker is not installed on this Jenkins node."
+            exit 1
+          fi
+          docker compose version >/dev/null 2>&1 || {
+            echo "ERROR: docker compose plugin is missing."
+            exit 1
+          }
         '''
       }
     }
@@ -88,11 +98,37 @@ pipeline {
       }
     }
 
+    stage('Prepare CTFd Data') {
+      when { expression { params.ACTION == 'apply' } }
+      steps {
+        sh '''
+          set -e
+          mkdir -p ctfd/data
+          cp outputs.json ctfd/data/outputs.json
+          echo "[+] Copied outputs.json to ctfd/data/outputs.json"
+        '''
+      }
+    }
+
+    stage('Run CTFd with Plugin') {
+      when { expression { params.ACTION == 'apply' } }
+      steps {
+        dir('ctfd') {
+          sh '''
+            set -e
+            docker compose down || true
+            docker compose pull
+            docker compose up -d
+            docker compose ps
+          '''
+        }
+      }
+    }
+
     stage('Validate Vulnerability') {
       when { expression { params.ACTION == 'apply' } }
       steps {
-        // Optional: only if you want Jenkins to SSH and run validate_vuln.sh remotely
-        echo 'Optional stage - will be added after we confirm SSH approach'
+        echo 'Vulnerability validation is documented in README and can be executed on the target instance.'
       }
     }
   }
