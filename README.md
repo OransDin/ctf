@@ -20,26 +20,28 @@ What this project does
 Repository structure
 --------------------------------------------------
 
-.
-├── infra/                  Terraform files
-│   ├── main.tf
-│   ├── variables.tf
-│   ├── outputs.tf
-│   └── modules/
-│       ├── network/
-│       └── ec2/
-│
-├── ctfd/                   CTFd setup
-│   ├── docker-compose.yml
-│   └── plugins/
-│       └── reachability/
-│           ├── __init__.py
-│           └── plugin.py
-│
-├── scripts/                Optional helper scripts
-│
-├── .gitignore
-└── README.txt
+Repository Structure
+
+infra/
+- main.tf            Main Terraform configuration
+- variables.tf       Terraform variables
+- outputs.tf         Terraform outputs
+- modules/
+  - network/         Networking resources (VPC, subnets, security groups)
+  - ec2/             EC2 instance configuration
+
+ctfd/
+- docker-compose.yml CTFd deployment configuration
+- plugins/
+  - reachability/
+    - __init__.py
+    - plugin.py      CTFd reachability validation plugin
+
+scripts/
+- Optional helper scripts
+
+.gitignore           Git ignore rules
+README.txt           Project documentation
 
 --------------------------------------------------
 Infrastructure
