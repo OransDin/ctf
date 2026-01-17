@@ -1,0 +1,12 @@
+**/.terraform/*
+**/.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+.env
+*.pem
+*.key
+*.tfstate.backup
+__pycache__/
+*.log
+versions.tf
+*.terraform.lock.hcl
