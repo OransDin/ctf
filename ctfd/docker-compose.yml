@@ -1,0 +1,28 @@
+services:
+  db:
+    image: mariadb:10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: ctfd
+      MYSQL_DATABASE: ctfd
+      MYSQL_USER: ctfd
+      MYSQL_PASSWORD: ctfd
+    volumes:
+      - db-data:/var/lib/mysql
+
+  ctfd:
+    image: ctfd/ctfd:latest
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: mysql+pymysql://ctfd:ctfd@db/ctfd
+      TF_OUTPUTS_PATH: /data/terraform/outputs.json
+    volumes:
+      - ./plugins:/opt/CTFd/CTFd/plugins
+      - ./data:/data/terraform
+    restart: unless-stopped
+
+volumes:
+  db-data:
+
