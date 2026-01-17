@@ -19,7 +19,7 @@ services:
       DATABASE_URL: mysql+pymysql://ctfd:ctfd@db/ctfd
       TF_OUTPUTS_PATH: /data/terraform/outputs.json
     volumes:
-      - ./plugins:/opt/CTFd/CTFd/plugins
+      - ./plugins/reachability:/opt/CTFd/CTFd/plugins/reachability
       - ./data:/data/terraform
     restart: unless-stopped
 
