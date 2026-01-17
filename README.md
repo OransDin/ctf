@@ -23,25 +23,25 @@ Repository structure
 Repository Structure
 
 infra/
-- main.tf            Main Terraform configuration
-- variables.tf       Terraform variables
-- outputs.tf         Terraform outputs
+- main.tf
+- variables.tf
+- outputs.tf
 - modules/
-  - network/         Networking resources (VPC, subnets, security groups)
-  - ec2/             EC2 instance configuration
+  - network/
+  - compute/
 
 ctfd/
-- docker-compose.yml CTFd deployment configuration
+- docker-compose.yml
 - plugins/
   - reachability/
     - __init__.py
-    - plugin.py      CTFd reachability validation plugin
+    - plugin.py
 
 scripts/
 - Optional helper scripts
 
-.gitignore           Git ignore rules
-README.txt           Project documentation
+.gitignore
+README.txt 
 
 --------------------------------------------------
 Infrastructure
