@@ -61,7 +61,7 @@ To avoid unnecessary AWS costs, tear down the infrastructure when finished:
 --------------------------------------------------
 High-Level Architecture
 --------------------------------------------------
-# The system is composed of the following components:
+## The system is composed of the following components:
 - Git
 - Jenkins
 - Terraform
