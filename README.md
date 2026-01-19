@@ -233,8 +233,7 @@ On the CTFd EC2 instance:
 - Docker is installed manually
 - Docker Compose is installed manually
 - CTFd is started using Docker Compose
-mkdir ctfd && cd ctfd
-docker compose up -d
+```bash mkdir ctfd && cd ctfd``` ```docker compose up -d ```
 
 Once running, CTFd is available at:
 http://<CTFD_EC2_PUBLIC_IP>:8000
