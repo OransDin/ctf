@@ -85,9 +85,9 @@ No AWS credentials or secrets are stored in this repository.
 --------------------------------------------------
 Architectural Decisions
 --------------------------------------------------
-## Why Jenkins and CTFd Run on Separate EC2 Instances
+### Why Jenkins and CTFd Run on Separate EC2 Instances
 
-## Jenkins and CTFd are intentionally deployed on separate EC2 instances.
+### Jenkins and CTFd are intentionally deployed on separate EC2 instances.
 This decision was made for the following reasons:
 
 1. Separation of concerns- Jenkins is responsible for infrastructure control and automation, while CTFd is an application platform. Combining them would blur responsibilities and complicate maintenance.
@@ -100,7 +100,7 @@ This decision was made for the following reasons:
 
 5. Future extensibility- Either system can be scaled, replaced, or modified independently.
 
-## Why EC2 Small Was Used Instead of Micro:
+### Why EC2 Small Was Used Instead of Micro:
 
 - EC2 small instances were chosen instead of micro for the following reasons:
 - Jenkins, Terraform, Docker, and AWS SDKs can easily exhaust micro instance resources
@@ -108,7 +108,7 @@ This decision was made for the following reasons:
 - Resource starvation causes misleading failures unrelated to architecture
 Using small instances avoids false negatives during testing and evaluation.
 
-## Using Git:
+### Using Git:
 Using Git was a conscious design decision, even though it was not explicitly required by the project instructions.
 The main reasons for introducing Git are:
 
@@ -129,7 +129,7 @@ Git is therefore used as an enabler, not as a dependency of the project requirem
 Repository structure
 --------------------------------------------------
 
-## Repository Structure
+### Repository Structure
 
 infra/
 - main.tf
@@ -163,7 +163,7 @@ README.txt
 --------------------------------------------------
 Jenkins Pipeline Flow
 --------------------------------------------------
-## Jenkins Job Parameters
+### Jenkins Job Parameters
 The Jenkins job supports the following parameters:
 
 - ACTION
@@ -181,7 +181,7 @@ This enables two deployment modes:
 - Dynamic vulnerability creation via boot-time scripts
 - Prebaked vulnerability via AMI artifact
 
-## Jenkins Execution Flow
+### Jenkins Execution Flow
 When the Jenkins job runs:
 
 1. Repository is cloned from Git
@@ -196,7 +196,7 @@ When the Jenkins job runs:
 Infrastructure Provisioning (Terraform)
 --------------------------------------------------
 
-## Infrastructure is created with Terraform and deployed on AWS.
+### Infrastructure is created with Terraform and deployed on AWS.
 
 It includes:
 - VPC and networking
@@ -212,7 +212,7 @@ Terraform outputs are written to an output file (e.g. outputs.json) and archived
 --------------------------------------------------
 Vulnerability Creation
 --------------------------------------------------
-## Boot-Time Script
+### Boot-Time Script
 When AMI mode is not used, the vulnerability is created via:
 scripts/setup_vulnerable_vm.sh
 This script runs automatically during EC2 boot and:
@@ -256,7 +256,7 @@ AWS EC2 API (fallback)
 
 This ensures the plugin always uses the authoritative infrastructure state.
 
-## Plugin Verification Flow
+### Plugin Verification Flow
 Retrieve the target EC2 public IP
 Perform a TCP-based connectivity check (e.g. port 22)
 Return success or failure inside the CTFd interface
@@ -268,7 +268,7 @@ A TCP check is used instead of ICMP to avoid false failures due to blocked ping 
 Network and Security Groups
 --------------------------------------------------
 
-## Exposed Ports
+### Exposed Ports
 
 - Jenkins + CTFd EC2
 	- TCP 8000 – CTFd web interface (restricted to operator IP)
